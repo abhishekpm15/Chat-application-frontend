@@ -26,7 +26,7 @@ const Cards = ({ friend }) => {
   const [text, setText] = useState([]);
   const ref = useRef();
 
-  const ENDPOINT = "https://chat-application-backend-production-cec7.up.railway.app/";
+  const ENDPOINT = "http://localhost:3001/";
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -54,7 +54,7 @@ const Cards = ({ friend }) => {
     setOpen(true);
     axios({
       method: "POST",
-      url: "https://chat-application-backend-production-cec7.up.railway.app/message/get-messages",
+      url: "http://localhost:3001/message/get-messages",
       data: {
         sender_id: user.uid,
         friend_id: friend.id,
@@ -89,7 +89,7 @@ const Cards = ({ friend }) => {
 
       axios({
         method: "POST",
-        url: "https://chat-application-backend-production-cec7.up.railway.app/message/send-message",
+        url: "http://localhost:3001/message/send-message",
         data: {
           sender_id: user.uid,
           friends: {
@@ -119,7 +119,7 @@ const Cards = ({ friend }) => {
         });
       axios({
         method: "POST",
-        url: "https://chat-application-backend-production-cec7.up.railway.app/message/send-message",
+        url: "http://localhost:3001/message/send-message",
         data: {
           sender_id: friend.id,
           friends: {

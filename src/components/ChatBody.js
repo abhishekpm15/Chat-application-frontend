@@ -42,7 +42,7 @@ const ChatBody = () => {
       console.log("this user id", user.uid);
       axios({
         method: "GET",
-        url: `https://chat-application-backend-production-cec7.up.railway.app/get-friends/${user.uid}`,
+        url: `http://localhost:3001/get-friends/${user.uid}`,
       })
         .then((res) => {
           console.log("Friends are ", res.data);

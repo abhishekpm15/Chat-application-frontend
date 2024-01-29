@@ -55,7 +55,7 @@ export function NavbarDark() {
       try {
         const response = await axios({
           method: "GET",
-          url: `https://chat-application-backend-production-cec7.up.railway.app/get-user/${searchTerm}`,
+          url: `http://localhost:3001/get-user/${searchTerm}`,
         });
 
         console.log("friends term", response.data);
