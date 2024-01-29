@@ -15,43 +15,21 @@ import { useSearch } from "../context/SearchContext";
 
 export function NavbarDark() {
   const { user, SignUp, SignOut } = useAuth();
-  // const [searchValue, setSearchValue] = useState();
-  // const [allUsers, setAllUsers] = useState([])
-  const { searchTerm, setSearchTerm, searchFriends, setSearchFriends } = useSearch();
+  const { searchTerm, setSearchTerm, searchFriends, setSearchFriends } =
+    useSearch();
   const [searchedFriends, setSearchedFriends] = useState([]);
-
-  // useEffect(()=>{
-  //   axios.get("http://localhost:3001/get-all-friends").then((response)=>{
-  //     console.log('all friends',response.data)
-  //     setAllUsers(response.data);
-  //   }).catch((err)=>{
-  //     console.log(err)
-  //   })
-  // },[])
 
   useEffect(() => {
     console.log("searched friends", searchedFriends);
-    console.log('searchFriends', searchFriends)
+    console.log("searchFriends", searchFriends);
     if (searchedFriends.length > 0) {
       toast.success("user found");
       console.log(searchedFriends);
     }
-  }, [searchedFriends]); // Ensure this dependency array is correctly set
-
-  // useEffect(() => {
-  //   console.log("searchedx friends", searchedFriends);
-  // }, [searchFriends]);
+  }, [searchedFriends]);
 
   const handleSearch = async () => {
     if (searchTerm !== "") {
-      // console.log(searchValue);
-      // allUsers.filter((user)=>{
-      //   return searchValue.toLowerCase() === '' ? user : user.email.toLowerCase().includes(searchValue)
-      // }).map(user=>{
-      //   return(
-      //     console.log(user)
-      //   )
-      // })
       try {
         const response = await axios({
           method: "GET",
@@ -60,24 +38,16 @@ export function NavbarDark() {
 
         console.log("friends term", response.data);
         const friends = response.data;
-        const friends2 = friends.filter((friend) => friend.id!== user.uid);
-        console.log('user id' , user.id)
-        // console.log("friends2", friends2)
-        if(friends2.length === 0){
-          toast.error("User not found !")
+        const friends2 = friends.filter((friend) => friend.id !== user.uid);
+        console.log("user id", user.id);
+        if (friends2.length === 0) {
+          toast.error("User not found !");
         }
-        setSearchFriends(friends2)
+        setSearchFriends(friends2);
         setSearchedFriends(friends2);
       } catch (err) {
         console.log(err);
       }
-
-      // console.log('search friends end', searchFriends)
-      // if (searchFriends.length > 0) {
-      //   toast.success("User found !");
-      // } else {
-        // toast.error("User not found!");
-      // }
     }
   };
 

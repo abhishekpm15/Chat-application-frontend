@@ -12,7 +12,6 @@ import { Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
-// import "./Cards.css";
 import io from "socket.io-client";
 var socket 
 
