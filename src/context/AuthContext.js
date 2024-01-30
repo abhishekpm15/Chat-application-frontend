@@ -12,7 +12,7 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
 
   const SignUp = () => {
     const provider = new GoogleAuthProvider();
@@ -27,12 +27,12 @@ export const AuthContextProvider = ({ children }) => {
           url: `http://localhost:3001/register/${res.user.uid}`,
           data: {
             id: res.user.uid,
-            email:res.user.email,
+            email: res.user.email,
             name: res.user.displayName,
           },
         })
           .then((data) => {
-            console.log('user id',data);
+            console.log("user id", data);
           })
           .catch((err) => {
             console.log(err);

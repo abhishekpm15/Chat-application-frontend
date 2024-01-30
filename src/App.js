@@ -1,9 +1,9 @@
 import "./App.css";
 import ChatBody from "./components/ChatBody";
 import { NavbarDark } from "./components/Navbar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState } from "react";
+import React from "react";
 import { SearchContextProvider } from "./context/SearchContext";
 function App() {
   return (

@@ -6,24 +6,39 @@ import {
   CardFooter,
   Typography,
   Button,
+  Textarea,
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { useSearch } from "../context/SearchContext";
-
+import useChat from "../customHooks/useChat";
+import { Modal } from "antd";
 
 const AddCard = ({ friendDetails }) => {
-  const { userFriends, setUserFriends } = useSearch();
+  const {
+    open,
+    setOpen,
+    message,
+    text,
+    ref,
+    handleChatClick,
+    handleTextAreaChange,
+    handleTextSend,
+  } = useChat(friendDetails);
+
+  const { userFriends } = useSearch();
   const [alreadyFriend, setAlreadyFriend] = useState(false);
   console.log("friendDetails", friendDetails.id);
   const { user } = useAuth();
   console.log("user ka friends hai bai", userFriends);
 
   useEffect(() => {
-    const isAlreadyFriend = userFriends?.some((friend) => friend.id === friendDetails.id);
+    const isAlreadyFriend = userFriends?.some(
+      (friend) => friend.id === friendDetails.id
+    );
     setAlreadyFriend(isAlreadyFriend);
-  }, [friendDetails, userFriends]); 
+  }, [friendDetails, userFriends]);
 
   const handleAddFriend = () => {
     if (user.uid !== friendDetails.id) {
@@ -88,6 +103,39 @@ const AddCard = ({ friendDetails }) => {
   };
   return (
     <div className="">
+      <Modal
+        title={`Chat with ${friendDetails.name}`}
+        centered
+        open={open}
+        onCancel={() => setOpen(false)}
+        width={1000}
+      >
+        <div className="min-h-[400px] max-h-[400px] mt-10 overflow-y-scroll scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-100 scrollbar-thumb-rounded-xl">
+          <div className="flex flex-col h-full space-y-3 m-5">
+            {text.map((messageItem, index) => (
+              <div
+                key={index}
+                className={`mb-2 rounded-xl px-3 py-2 font-semibold ${
+                  messageItem.sent
+                    ? "text-right bg-yellow-200 max-w-sm self-end"
+                    : "text-left bg-orange-200 max-w-fit"
+                }`}
+              >
+                <div className="">{messageItem.text}</div>
+              </div>
+            ))}
+          </div>
+          <div ref={ref}></div>
+        </div>
+
+        <Textarea
+          color="purple"
+          label="Message"
+          value={message}
+          onChange={handleTextAreaChange}
+        />
+        <Button onClick={handleTextSend}>Send</Button>
+      </Modal>{" "}
       <Card className="mt-6 w-72 shadow-2xl hover:scale-110 transition duration-300">
         <CardHeader color="blue-gray" className="relative h-48 w-38">
           <img
@@ -105,7 +153,9 @@ const AddCard = ({ friendDetails }) => {
         <CardFooter className="pt-0">
           {alreadyFriend ? (
             // <div>Already in your chat list</div>
-            <Button className="bg-green-400">Already in your chat list</Button>
+            <Button className="bg-green-400" onClick={handleChatClick}>
+              Already in your chat list
+            </Button>
           ) : (
             <Button onClick={handleAddFriend}>Add Friend</Button>
           )}

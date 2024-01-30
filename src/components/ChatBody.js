@@ -33,7 +33,7 @@ const ChatBody = () => {
           console.log(err);
         });
     }
-  }, [user]);
+  }, [user, searchFriends]);
 
   return (
     <div className="mx-auto max-w-screen-xl from-blue-gray-900 to-blue-gray-800 px-4 py-3 max-h-screen mt-10 flex justify-center">

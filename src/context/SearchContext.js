@@ -1,4 +1,4 @@
-import { useState, createContext, useContext,useEffect } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
@@ -6,14 +6,14 @@ const SearchContext = createContext();
 
 export const SearchContextProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchFriends , setSearchFriends] = useState([])
+  const [searchFriends, setSearchFriends] = useState([]);
   const [userFriends, setUserFriends] = useState([]);
   const { user } = useAuth();
 
-  useEffect(()=>{
+  useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:3001/get-friends/${user.uid}`,
+      url: `http://localhost:3001/get-friends/${user?.uid}`,
     })
       .then((res) => {
         console.log("Friends are ", res.data);
@@ -22,17 +22,22 @@ export const SearchContextProvider = ({ children }) => {
       .catch((err) => {
         console.log(err);
       });
-  },[user])
+  }, [user]);
 
-  const values = { searchTerm, setSearchTerm, searchFriends, setSearchFriends, userFriends, setUserFriends };
-
+  const values = {
+    searchTerm,
+    setSearchTerm,
+    searchFriends,
+    setSearchFriends,
+    userFriends,
+    setUserFriends,
+  };
 
   return (
     <SearchContext.Provider value={values}>{children}</SearchContext.Provider>
   );
 };
 
-
-export function useSearch(){
-    return useContext(SearchContext)
+export function useSearch() {
+  return useContext(SearchContext);
 }

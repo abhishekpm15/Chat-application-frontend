@@ -26,7 +26,7 @@ export function NavbarDark() {
       toast.success("user found");
       console.log(searchedFriends);
     }
-  }, [searchedFriends]);
+  }, [searchedFriends, searchFriends]);
 
   const handleSearch = async () => {
     if (searchTerm !== "") {
