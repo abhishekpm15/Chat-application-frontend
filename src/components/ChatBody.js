@@ -9,28 +9,28 @@ const ChatBody = () => {
   const { searchTerm, searchFriends } = useSearch();
   const { user } = useAuth();
   const [userFriends, setUserFriends] = useState([]);
-  console.log("user friendssssss", userFriends);
+  // //console.log("user friendssssss", userFriends);
 
   useEffect(() => {
-    console.log("user friends", userFriends);
-    console.log("search friends", searchFriends);
+    // //console.log("user friends", userFriends);
+    // //console.log("search friends", searchFriends);
   }, [userFriends, searchFriends]);
 
   useEffect(() => {
-    console.log("user chatbody", user);
-    console.log("cjecl search friend", searchFriends);
+    //console.log("user chatbody", user);
+    //console.log("cjecl search friend", searchFriends);
     if (user) {
-      console.log("this user id", user.uid);
+      //console.log("this user id", user.uid);
       axios({
         method: "GET",
         url: `http://localhost:3001/get-friends/${user.uid}`,
       })
         .then((res) => {
-          console.log("Friends are ", res.data);
+          //console.log("Friends are ", res.data);
           setUserFriends(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }, [user, searchFriends]);

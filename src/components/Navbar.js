@@ -20,11 +20,11 @@ export function NavbarDark() {
   const [searchedFriends, setSearchedFriends] = useState([]);
 
   useEffect(() => {
-    console.log("searched friends", searchedFriends);
-    console.log("searchFriends", searchFriends);
+    //console.log("searched friends", searchedFriends);
+    //console.log("searchFriends", searchFriends);
     if (searchedFriends.length > 0) {
       toast.success("user found");
-      console.log(searchedFriends);
+      //console.log(searchedFriends);
     }
   }, [searchedFriends, searchFriends]);
 
@@ -36,17 +36,17 @@ export function NavbarDark() {
           url: `http://localhost:3001/get-user/${searchTerm}`,
         });
 
-        console.log("friends term", response.data);
+        //console.log("friends term", response.data);
         const friends = response.data;
         const friends2 = friends.filter((friend) => friend.id !== user.uid);
-        console.log("user id", user.id);
+        //console.log("user id", user.id);
         if (friends2.length === 0) {
           toast.error("User not found !");
         }
         setSearchFriends(friends2);
         setSearchedFriends(friends2);
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     }
   };

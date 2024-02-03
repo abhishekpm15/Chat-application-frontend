@@ -29,9 +29,9 @@ const AddCard = ({ friendDetails }) => {
 
   const { userFriends } = useSearch();
   const [alreadyFriend, setAlreadyFriend] = useState(false);
-  console.log("friendDetails", friendDetails.id);
+  // console.log("friendDetails", friendDetails.id);
   const { user } = useAuth();
-  console.log("user ka friends hai bai", userFriends);
+  // console.log("user ka friends hai bai", userFriends);
 
   useEffect(() => {
     const isAlreadyFriend = userFriends?.some(
@@ -56,17 +56,17 @@ const AddCard = ({ friendDetails }) => {
       })
         .then((result) => {
           if (result.status === 201) {
-            console.log(result.data);
+            // console.log(result.data);
             setTimeout(() => {
               window.location.reload();
             }, 2000);
           } else {
-            console.log(result.data);
+            // console.log(result.data);
             toast.error(result.data);
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
 
       axios({
@@ -82,20 +82,20 @@ const AddCard = ({ friendDetails }) => {
         },
       })
         .then((result) => {
-          console.log("user add friend", user);
+          // console.log("user add friend", user);
           if (result.status === 201) {
-            console.log(result.data);
+            // console.log(result.data);
             toast.success("Friend added successfully");
             setTimeout(() => {
               window.location.reload();
             }, 2000);
           } else {
-            console.log(result.data);
+            // console.log(result.data);
             toast.error(result.data);
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } else {
       toast.error("You cannot add yourself as friend");

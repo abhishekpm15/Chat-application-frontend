@@ -10,6 +10,7 @@ import {
 import { Modal } from "antd";
 import { Textarea } from "@material-tailwind/react";
 import useChat from "../customHooks/useChat";
+import Modals from "./Modals";
 
 const Cards = ({ friend }) => {
   const {
@@ -57,7 +58,7 @@ const Cards = ({ friend }) => {
           onChange={handleTextAreaChange}
         />
         <Button onClick={handleTextSend}>Send</Button>
-      </Modal>
+      </Modal>{" "}
       <Card className="mt-6 w-72 shadow-2xl hover:scale-110 transition duration-300 ">
         <CardHeader color="blue-gray" className="relative h-48 w-38">
           <img

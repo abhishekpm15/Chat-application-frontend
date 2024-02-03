@@ -1,36 +1,32 @@
-// import React, { useEffect,useState } from "react";
-// import useChat from "../customHooks/useChat";
+// import React from "react";
 // import { Modal } from "antd";
-// import { Textarea, Button } from "@material-tailwind/react";
-// const Modals = ({ friendDetails, open, text }) => {
-//     const [modalOpen , setModalOpen] = useState(open)
-//     useEffect(()=>{
-//         setModalOpen(open);
-//     },[])
-//   const {
-//     socketConnected,
-//     // open,
-//     // setOpen,
-//     message,
-//     // setMessage,
-//     setSocketConnected,
-//     ref,
-//     handleChatClick,
-//     handleTextAreaChange,
-//     handleTextSend,
-//   } = useChat(friendDetails);
+// import { Textarea,  Button} from "@material-tailwind/react";
+// import useChat from "../customHooks/useChat";
+// const Modals = ({friend}) => {
+// const {
+//   socketConnected,
+//   open,
+//   setOpen,
+//   message,
+//   setMessage,
+//   text,
+//   setText,
+//   setSocketConnected,
+//   ref,
+//   handleChatClick,
+//   handleTextAreaChange,
+//   handleTextSend,
+// } = useChat(friend)
+
+// console.log('setOpen state',open)
 
 //   return (
 //     <div>
-//       {
-//         // console.log("Modals component")
-//         console.log("Modals component, open", friendDetails.name,open)
-//       }
 //       <Modal
-//         title={`Chat with ${friendDetails.name}`}
+//         title={`Chat with ${friend.name}`}
 //         centered
-//         open={modalOpen}
-//         onCancel={() => setModalOpen(false)}
+//         open={open}
+//         onCancel={() => setOpen(false)}
 //         width={1000}
 //       >
 //         <div className="min-h-[400px] max-h-[400px] mt-10 overflow-y-scroll scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-100 scrollbar-thumb-rounded-xl">

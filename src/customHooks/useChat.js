@@ -14,22 +14,41 @@ const useChat = (friend) => {
   const [text, setText] = useState([]);
   const ref = useRef();
 
+  console.log("setOpen state", open);
   const ENDPOINT = "http://localhost:3001/";
 
   useEffect(() => {
-    socket = io(ENDPOINT);
-    socket.emit("setup", friend.id);
-    socket.on("connection", () => {
-      setSocketConnected(true);
-    });
+  socket = io(ENDPOINT);
+  socket.emit("setup", friend.id);
+  socket.on("connection", () => {
+    setSocketConnected(true);
+  });
   }, [friend.id]);
 
   useEffect(() => {
     socket.on("message_received", (newMessageReceived) => {
       console.log("This is the new message that you got", newMessageReceived);
-      setText([...text, { text: newMessageReceived, sent: false }]);
+      setText([
+        ...text,
+        {
+          text: newMessageReceived.text,
+          sent: false,
+          timestamps: newMessageReceived.timestamps,
+        },
+      ]);
+      console.log(message);
+      console.log(friend.name);
+      // toast.success(
+      //   <div>
+      //     You received a new message from:{" "}
+      //     <span className="font-bold text-cyan-500 text-sm">{friend.name}</span>
+      //   </div>,
+      //   {
+      //     toastId: "newMessageToast",
+      //   }
+      // );
     });
-  });
+  }, [text]);
 
   useEffect(() => {
     if (text.length) {
@@ -37,9 +56,9 @@ const useChat = (friend) => {
     }
   }, [text]);
 
-  const handleChatClick = () => {
+  const handleChatClick =  () => {
     setOpen(true);
-    axios({
+     axios({
       method: "POST",
       url: "http://localhost:3001/message/get-messages",
       data: {
@@ -49,12 +68,11 @@ const useChat = (friend) => {
     })
       .then((response) => {
         const result = response.data;
-        if (Array.isArray(result)) {
-          setText(result);
-          socket.emit("join_chat", 1234);
-          console.log(result);
-        } else {
-          console.log("Invalid response format:", result);
+        console.log("result", result);
+        if (result.length) {
+        setText(result);
+        socket.emit("join_chat", 1234);
+        console.log(result);
         }
       })
       .catch((error) => {
@@ -66,14 +84,22 @@ const useChat = (friend) => {
     setMessage(e.target.value);
   };
 
-  const handleTextSend = () => {
+  const handleTextSend =  () => {
     if (message === "") {
       toast.error("Messsage cannot be empty !");
     } else {
-      setText([...text, { text: message, sent: true }]);
+      setText([...text, { text: message, sent: true, timestamps: new Date() }]);
       console.log(text);
-
-      axios({
+      socket.emit("new_message", {
+        user_id: user.uid,
+        friend_id: friend.id,
+        messages: {
+          text: message,
+          timestamps: new Date(),
+          sent: true,
+        },
+      });
+       axios({
         method: "POST",
         url: "http://localhost:3001/message/send-message",
         data: {
@@ -90,20 +116,11 @@ const useChat = (friend) => {
       })
         .then((result) => {
           console.log("resdata", result.data);
-          socket.emit("new_message", {
-            user_id: user.uid,
-            friend_id: friend.id,
-            messages: {
-              text: message,
-              timestamps: new Date(),
-              sent: true,
-            },
-          });
         })
         .catch((err) => {
           console.log(err);
         });
-      axios({
+       axios({
         method: "POST",
         url: "http://localhost:3001/message/send-message",
         data: {
@@ -121,7 +138,7 @@ const useChat = (friend) => {
         .then((result) => {
           console.log("resdata", result.data);
           setMessage("");
-          handleChatClick();
+          // handleChatClick();
           console.log(result);
         })
         .catch((err) => {

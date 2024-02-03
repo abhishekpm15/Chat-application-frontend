@@ -16,11 +16,11 @@ export const SearchContextProvider = ({ children }) => {
       url: `http://localhost:3001/get-friends/${user?.uid}`,
     })
       .then((res) => {
-        console.log("Friends are ", res.data);
+        //console.log("Friends are ", res.data);
         setUserFriends(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [user]);
 

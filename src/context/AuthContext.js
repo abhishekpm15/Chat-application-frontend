@@ -18,10 +18,10 @@ export const AuthContextProvider = ({ children }) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((res) => {
-        console.log("Signed in successfully");
+        //console.log("Signed in successfully");
         toast.success("Signed in Successfully !");
         setUser(res.user);
-        console.log(res.user);
+        //console.log(res.user);
         axios({
           method: "POST",
           url: `http://localhost:3001/register/${res.user.uid}`,
@@ -32,14 +32,14 @@ export const AuthContextProvider = ({ children }) => {
           },
         })
           .then((data) => {
-            console.log("user id", data);
+            //console.log("user id", data);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       })
       .catch((err) => {
-        console.log("Failed to sign in", err);
+        //console.log("Failed to sign in", err);
       });
   };
 
@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
         toast.success("Signed out Successfully !");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -58,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user.uid);
+        //console.log(user.uid);
       } else {
         setUser(null);
       }
