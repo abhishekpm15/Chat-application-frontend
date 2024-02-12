@@ -10,7 +10,7 @@ import {
 import { Modal } from "antd";
 import { Textarea } from "@material-tailwind/react";
 import useChat from "../customHooks/useChat";
-import Modals from "./Modals";
+// import Modals from "./Modals";
 
 const Cards = ({ friend }) => {
   const {
@@ -19,10 +19,13 @@ const Cards = ({ friend }) => {
     message,
     text,
     ref,
+    notificaton,
+    setNotification,
     handleChatClick,
     handleTextAreaChange,
     handleTextSend,
   } = useChat(friend);
+  console.log("use CHat notification", notificaton, open);
 
   return (
     <div>
@@ -74,7 +77,12 @@ const Cards = ({ friend }) => {
           <Typography>{friend?.email}</Typography>
         </CardBody>
         <CardFooter className="pt-0">
-          <Button onClick={handleChatClick}>CHAT</Button>
+          <div className="flex space-x-1 justify-center">
+            <Button onClick={handleChatClick}>CHAT</Button>
+            {!open && notificaton && (
+              <div className="bg-deep-orange-600 w-2 h-2 rounded-full"></div>
+            )}
+          </div>
         </CardFooter>
       </Card>
     </div>
